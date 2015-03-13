@@ -1,0 +1,1 @@
+A set of lightweight SPECIFIC purpose reusable Java componentes.Examples are: file parsers, simple communication protocols, logging, formatters, directory pollers, file filters, queue management, objects pool managers,
