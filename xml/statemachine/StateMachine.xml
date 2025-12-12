@@ -1,0 +1,33 @@
+<StateMachine xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/StateMachine.xsd'>
+
+    <States>
+        <State name="One" description="State One"/>
+        <State name="Two" description="State Two"/>
+        <State name="Three" description="State Three"/>
+    </States>
+
+    <Events>
+        <Event name="E-One" description="Event One"/>
+    </Events>
+
+    <Transitions>
+        <Transition fromState="One" event="E-One" toState="Two">
+            <Action class="org.vaniglia.statemachine.actions.LoggingAction">
+                <LoggingPrefix value="ARC-ONE"/>
+            </Action>
+        </Transition>
+
+        <Transition fromState="Two" event="E-One" toState="Three">
+            <Action class="org.vaniglia.statemachine.actions.LoggingAction">
+                <LoggingPrefix value="ARC-TWO"/>
+            </Action>
+        </Transition>
+
+        <Transition fromState="Three" event="E-One" toState="One">
+            <Action class="org.vaniglia.statemachine.actions.LoggingAction">
+                <LoggingPrefix value="ARC-THREE"/>
+            </Action>
+        </Transition>
+    </Transitions>
+
+</StateMachine>

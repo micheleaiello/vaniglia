@@ -1,0 +1,136 @@
+<!--
+Project Vaniglia
+User: Michele Aiello
+Date: Aug 3, 2003
+
+Copyright (C) 2003/2004  Michele Aiello
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+-->
+<project name="Vaniglia" default="build" basedir=".">
+
+    <property name="src" value="./src"/>
+    <property name="out" value="./out"/>
+    <property name="docs" value="./docs"/>
+    <property name="lib" value="./lib"/>
+    <property name="properties" value="./properties"/>
+    <property name="dist.dir" value="./dist"/>
+    <property name="xml.dir" value="./xml"/>
+
+    <path id="project.classpath">
+        <pathelement path="${out}"/>
+        <pathelement path="${properties}"/>
+        <fileset dir="${lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.classpath" refid="project.classpath"/>
+
+    <target name="build" description="Builds the Vaniglia jar">
+        <buildnumber/>
+        <copy file="build.number" tofile="${out}/Build.properties" />
+
+        <tstamp>
+            <format property="build.timestamp" pattern="dd/MM/yyyy HH:mm"/>
+        </tstamp>
+
+        <echo file="${out}/Build.properties" append="true">
+            build.timestamp=${build.timestamp}
+            user.name=${user.name}
+            os.name=${os.name}
+            java.vm.version=${java.vm.version}
+        </echo>
+
+        <echo message="Vaniglia Build properties: "/>
+        <echo message="   - Build: ${build.number}"/>
+        <echo message="   - User Name: ${user.name}"/>
+        <echo message="   - OS: ${os.name}"/>
+        <echo message="   - Java: ${java.vm.version}"/>
+        <echo message="   - TS: ${build.timestamp}"/>
+
+        <antcall target="make_jar"/>
+        <antcall target="make_docs"/>
+        <antcall target="make_dist"/>
+    </target>
+
+    <target name="compile" description="Compiles Vaniglia" >
+        <javac srcdir="${src}" destdir="${out}" debug="on" optimize="on">
+            <classpath path="${project.classpath}"/>
+        </javac>
+    </target>
+
+    <target name="make_jar" depends="clean, compile" description="Creates Vaniglia JARs file" >
+        <delete file="vaniglia.jar"/>
+        <delete file="vaniglia-logging.jar"/>
+        <jar jarfile="vaniglia.jar" basedir="./out/" includes="org/vaniglia/**,org/apache/**,Build.properties"
+            excludes="org/vaniglia/examples/**" manifest="MANIFEST.MF" />
+        <jar jarfile="vaniglia-logging.jar" basedir="./out/" includes="org/vaniglia/log4j/**,Build.properties"
+            excludes="org/vaniglia/examples/**" manifest="MANIFEST.MF" />
+    </target>
+
+    <target name="clean" depends="clean_docs" >
+        <delete file="vaniglia.jar"/>
+        <delete file="vaniglia-logging.jar"/>
+        <delete dir="${out}/org"/>
+        <delete dir="${out}/.dependency-info"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="clean_docs">
+        <delete file="Vaniglia_docs.zip"/>
+        <delete dir="${docs}"/>
+    </target>
+
+    <target name="make_docs" description="Compiles the Documentation for Vaniglia" >
+        <delete dir="${docs}"/>
+        <mkdir dir="${docs}"/>
+        <javadoc packagenames="org.vaniglia/*"
+            sourcepath="${src}"
+            destdir="${docs}"
+            excludepackagenames="org.vaniglia.examples/*"
+            Private="true">
+            <classpath path="${project.classpath}"/>
+        </javadoc>
+    </target>
+
+    <target name="zip_docs" depends="make_docs" description="Creates a zip file with the Vaniglia Documentation" >
+        <delete file="Vaniglia_docs.zip"/>
+        <zip zipfile="Vaniglia_docs.zip" basedir="${docs}"/>
+    </target>
+
+    <target name="make_dist" description="Creates the Vaniglia distribution directory and tar/zip files">
+        <java outputproperty="vaniglia.version" classname="org.vaniglia.Information">
+            <arg value="version"/>
+            <classpath path="${project.classpath}"/>
+        </java>
+
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <copyfile src="vaniglia.jar" dest="${dist.dir}/vaniglia.jar"/>
+        <copydir src="${docs}" dest="${dist.dir}/docs"/>
+        <copyfile src="build.xml" dest="${dist.dir}/build.xml"/>
+        <copyfile src="license.txt" dest="${dist.dir}/license.txt"/>
+        <copyfile src="ChangeLog.txt" dest="${dist.dir}/ChangeLog.txt"/>
+        <copydir src="${src}" dest="${dist.dir}/src" includes="org/vaniglia/**/*.java"/>
+        <copydir src="${lib}" dest="${dist.dir}/lib" includes="*.jar"/>
+        <copydir src="${xml.dir}" dest="${dist.dir}/xml" includes="**/*.xml, **/*.xsd"/>
+        <copydir src="${dist.dir}" dest="Vaniglia-${vaniglia.version}"/>
+        <zip zipfile="Vaniglia-${vaniglia.version}.zip" basedir="Vaniglia-${vaniglia.version}"/>
+        <tar tarfile="Vaniglia-${vaniglia.version}.tar.gz" basedir="Vaniglia-${vaniglia.version}" compression="gzip"/>
+        <delete dir="Vaniglia-${vaniglia.version}"/>
+    </target>
+
+</project>

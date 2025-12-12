@@ -1,0 +1,12 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <Parser token=",">
+        <CustomRecordType class="org.vaniglia.examples.parser.MyCustomRecordType">
+            <Field name="IMSI" position="2"/>
+            <Field name="MSISDN" position="1"/>
+            <Field name="Timestamp" position="3"/>
+            <Field name="Value" position="4"/>
+        </CustomRecordType>
+    </Parser>
+
+</ParserConfiguration>

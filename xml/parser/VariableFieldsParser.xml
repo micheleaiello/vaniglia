@@ -1,0 +1,14 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <Parser token="," recovery="0">
+        <VariableLenghtRecordType>
+            <StringFieldType trim="true"/>
+            <DateFieldType inputFormat="yyyyMMdd" outputFormat="dd/MM/yyyy"/>
+            <StringFieldType trim="true"/>
+            <ExtraFieldsType>
+                <StringFieldType trim="true"/>
+            </ExtraFieldsType>
+        </VariableLenghtRecordType>
+    </Parser>
+
+</ParserConfiguration>

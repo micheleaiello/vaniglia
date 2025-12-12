@@ -1,0 +1,59 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="StateMachine">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="States" type="StateList"/>
+                <xsd:element name="Events" type="EventList"/>
+                <xsd:element name="Transitions" type="TransitionList"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="StateList">
+        <xsd:sequence>
+            <xsd:element name="State" type="State" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventList">
+        <xsd:sequence>
+            <xsd:element name="Event" type="Event" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TransitionList">
+        <xsd:sequence>
+            <xsd:element name="Transition" type="Transition" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="State">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="description" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Event">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="description" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Transition">
+        <xsd:sequence>
+            <xsd:element name="Action" type="Action" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="fromState" type="xsd:string" use="required"/>
+        <xsd:attribute name="event" type="xsd:string" use="required"/>
+        <xsd:attribute name="toState" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Action">
+        <xsd:sequence>
+            <xsd:any minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+
+</xsd:schema>

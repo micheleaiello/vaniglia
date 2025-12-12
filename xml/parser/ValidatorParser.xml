@@ -1,0 +1,38 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <ValidatorDef name="MyCustomValidator" class="org.vaniglia.examples.parser.MyCustomValidator"/>
+
+    <Parser token="," recovery="0">
+        <FixedLenghtRecordType>
+
+            <StringFieldType name="Field 1" trim="true">
+                <Validator>
+                    <NotNullValidator/>
+                    <LengthValidator minLength="4" maxLength="4"/>
+                    <CharsetValidator charset="0123456789" in="true"/>
+                </Validator>
+            </StringFieldType>
+
+            <DateFieldType name="Field 2" inputFormat="yyyyMMdd" outputFormat="dd/MM/yyyy">
+                <Validator>
+                    <NotNullValidator/>
+                </Validator>
+            </DateFieldType>
+
+            <CharFieldType name="Field 3" trim="true">
+                <Validator>
+                    <NotNullValidator/>
+                    <CharsetValidator charset="ABCDEFGHIJKLMNOPQRSTUVWXYZ" in="true"/>
+                </Validator>
+            </CharFieldType>
+
+            <StringFieldType name="Field 4" trim="true">
+                <Validator>
+                    <MyCustomValidator/>
+                </Validator>
+            </StringFieldType>
+
+        </FixedLenghtRecordType>
+    </Parser>
+
+</ParserConfiguration>

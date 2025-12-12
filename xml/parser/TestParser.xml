@@ -1,0 +1,12 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <Parser token="," recovery="1000">
+        <FixedLenghtRecordType>
+            <StringFieldType trim="true"/>
+            <DateFieldType name="date" inputFormat="dd/MM/yyyy" outputFormat="yyyyMMdd" strongCheck="true"/>
+            <DateFieldType name="date" inputFormat="dd/MM/yyyy" outputFormat="yyyyMMdd" strongCheck="false"/>
+            <StringFieldType trim="true"/>
+        </FixedLenghtRecordType>
+    </Parser>
+
+</ParserConfiguration>

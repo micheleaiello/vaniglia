@@ -1,0 +1,97 @@
+0.5.0 (23-Nov-2008)
+    - Parser improvements:
+       - Fields PreProcessors. Currently These are the available FieldsPreProcessors:
+         - SubstringPreProcessor. This preprocessor will allow to use only a substring of the field.
+         - TrimPreProcessor. This preprocessors allows the removal of any leading and/or trailing characters in the field.
+         - StringAppenderPreProcessor. This preprocessors allows to add a prefix and/or a suffix to the field.
+
+       - Better handling of empty lines.
+       - Comments on Parser's file.
+       - Field's default value
+       - Constant fields
+       - TimestampType. Is a type of field that can be used to parse plain timestamp (seconds or milliseconds
+         since Jan, 1st 1970). Here's an example:
+           <TimestampFieldType isJavaTimestamp="false" outputFormat="dd/MM/yyyy"/>
+
+
+    - ExtensionsManager improvements:
+       - Configuration file reload time
+
+    - Major bug fixing on many modules (especially the Message Queue).
+
+0.4.0 (28-Jan-2008)
+    - Added module Vaniglia Message Queue (VMQ). This is a presistent queue of message that can have a delivery
+      timestamp. The current implementation can only be used for interprocess communication. Future version will
+      be improved to allow the same queue to be used from multiple processes.
+
+    - Added a new log4j appender. RollingFileFoldersBackupAppender.
+
+    - Performance Monitor improvements:
+        - Latency can also be tracked.
+        - Latency can also be used for alarms.
+
+    - Corrected a bug on the Socket Protocol Module. The ConnectionPoolSocketClient wasn't using any of the reconnection parameter.
+
+    - Minor Bug fixing
+
+0.3.0 (12-Apr-2007)
+    - Added a module log4j with log4j appenders. The only one in this release is RollingFileDailyFolderAppender.
+
+    - Parser improvements:
+        - Improved performances with recovery
+        - New Field Type: CharType (Single character field).
+        - Field Validators. Currently the following validators are implemented:
+            - NotNullValidator
+            - CharsetValidator
+            - LengthValidator
+        - Custom class field validator.
+
+     - Directory Poller improvements:
+        - Added a configurable format for the appended timestamp.
+        - File are now immediatelly moved to the final directory (only if automove is set) after being processed.
+        - Some Bug Fixing.
+
+     - Added module Crypto
+        This module is intented to be a simple way to use encryption without having to deal with all the
+        boring details. Just a password and a string to entrypt/decrypt.
+
+     - Added module Extension Framework
+        This module is intented to be used for simple extension (plugin like) for applications. It allows the
+        application developer to define Extension Points that other developers can use to extend the application
+        behavior. The Extension configuration file can be modified at runtime and will be reloaded by the
+        Extension. Global parameters can be provided and will be subsctituted in all extensions parameters using them.
+
+     - Added module Socket Communication Framework
+        This module is intented to be used for simple socket-based communication protocols. It features reconnection,
+        connection pooling and many others basic functionalities of every communication procotol. The logic of how data
+        is excanged between clients and servers is coded in two delegate classes (ServerDelegate and ClientDelegate).
+
+0.2.3 (30-Aug-2005)
+    - Added module TextTable
+        This module is useful for formatting table data on the console.
+
+    - Parser improvements:
+        - New Field Type: BooleanType.
+        - Recovery feature in the Parser. If the application crashes during the parsing you have a chance to
+            restart the parsing from the last parsed record.
+        - FixedLenghtRecords and VariableLenghtRecords can have "named" fields.
+
+0.2.2 (07-Oct-2004)
+    - Major improvements in the Performance Monitor
+
+    - Bug fixing in all modules
+
+0.2 (11-June-2004)
+    - Added module Performance Monitor
+        This module is useful when you need to mesure the performances of your application.
+        It can take track of averages for many time period (last minute, last hour and so on).
+        Averages (or lap) can also maintain their history.
+
+    - Included some classes from jakarta common collections.
+        I've prefered to include only some classes from common collections insted of the whole jar because
+        I only needed few classes (FastHashMap and CircularFifoBuffer).
+
+0.1 - Initial Release (28-May-2004)
+
+    - This is the Vaniglia initial release.
+        It includes the following modules: file parser, directory polling, state machine, object pool.

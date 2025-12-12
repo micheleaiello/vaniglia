@@ -1,0 +1,11 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <Parser token="&#x0009;" recovery="0">
+        <FixedLenghtRecordType>
+            <StringFieldType name="F1" trim="true"/>
+            <StringFieldType name="F2" trim="true"/>
+            <StringFieldType trim="true"/>
+        </FixedLenghtRecordType>
+    </Parser>
+
+</ParserConfiguration>

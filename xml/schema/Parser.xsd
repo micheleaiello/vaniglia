@@ -1,0 +1,199 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="ParserConfiguration">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="FieldTypeDef" type="FieldTypeDef" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="PreProcessorDef" type="PreProcessorDef" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="ValidatorDef" type="ValidatorDef" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="Parser" type="Parser" minOccurs="1" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="FieldTypeDef">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="PreProcessorDef">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ValidatorDef">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Parser">
+        <xsd:choice>
+            <xsd:element name="FixedLenghtRecordType" type="FixedLenghtRecordType"/>
+            <xsd:element name="VariableLenghtRecordType" type="VariableLenghtRecordType"/>
+            <xsd:element name="CustomRecordType" type="CustomRecordType"/>
+        </xsd:choice>
+        <xsd:attribute name="token" type="xsd:string"/>
+        <xsd:attribute name="comment" type="xsd:string"/>
+        <xsd:attribute name="recovery" type="xsd:integer"/>
+        <xsd:attribute name="flush" type="xsd:boolean"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="FixedLenghtRecordType">
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:element name="StringFieldType" type="StringFieldType"/>
+                <xsd:element name="BooleanFieldType" type="BooleanFieldType"/>
+                <xsd:element name="DateFieldType" type="DateFieldType"/>
+                <xsd:element name="TimestampFieldType" type="TimestampFieldType"/>
+                <xsd:element name="CharFieldType" type="CharFieldType"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VariableLenghtRecordType">
+        <xsd:sequence>
+            <xsd:sequence>
+                <xsd:choice>
+                    <xsd:element name="StringFieldType" type="StringFieldType"/>
+                    <xsd:element name="BooleanFieldType" type="BooleanFieldType"/>
+                    <xsd:element name="DateFieldType" type="DateFieldType"/>
+                    <xsd:element name="TimestampFieldType" type="TimestampFieldType"/>
+                    <xsd:element name="CharFieldType" type="CharFieldType"/>
+                </xsd:choice>
+            </xsd:sequence>
+            <xsd:element name="ExtraFieldsType" type="ExtraFieldsType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ExtraFieldsType">
+        <xsd:choice>
+            <xsd:element name="StringFieldType" type="StringFieldType"/>
+            <xsd:element name="BooleanFieldType" type="BooleanFieldType"/>
+            <xsd:element name="DateFieldType" type="DateFieldType"/>
+            <xsd:element name="TimestampFieldType" type="TimestampFieldType"/>
+            <xsd:element name="CharFieldType" type="CharFieldType"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomRecordType">
+        <xsd:sequence>
+            <xsd:any/>
+        </xsd:sequence>
+        <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="StringFieldType">
+        <xsd:sequence minOccurs="0">
+            <xsd:choice>
+                <xsd:element name="PreProcessor" type="PreProcessor"/>
+                <xsd:element name="Validator" type="Validator"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute name="isConstant" type="xsd:boolean"/>
+        <xsd:attribute name="trim" type="xsd:boolean" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="BooleanFieldType">
+        <xsd:sequence minOccurs="0">
+            <xsd:choice>
+                <xsd:element name="PreProcessor" type="PreProcessor"/>
+                <xsd:element name="Validator" type="Validator"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:boolean"/>
+        <xsd:attribute name="isConstant" type="xsd:boolean"/>
+        <xsd:attribute name="trim" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="ignoreCase" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="trueValue" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="DateFieldType">
+        <xsd:sequence minOccurs="0">
+            <xsd:choice>
+                <xsd:element name="PreProcessor" type="PreProcessor"/>
+                <xsd:element name="Validator" type="Validator"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute name="isConstant" type="xsd:boolean"/>
+        <xsd:attribute name="inputFormat" type="xsd:string" use="required"/>
+        <xsd:attribute name="outputFormat" type="xsd:string" use="required"/>
+        <xsd:attribute name="strongCheck" type="xsd:boolean"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimestampFieldType">
+        <xsd:sequence minOccurs="0">
+            <xsd:choice>
+                <xsd:element name="PreProcessor" type="PreProcessor"/>
+                <xsd:element name="Validator" type="Validator"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute name="isConstant" type="xsd:boolean"/>
+        <xsd:attribute name="isJavaTimestamp" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="outputFormat" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="CharFieldType">
+        <xsd:sequence minOccurs="0">
+            <xsd:choice>
+                <xsd:element name="PreProcessor" type="PreProcessor"/>
+                <xsd:element name="Validator" type="Validator"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute name="isConstant" type="xsd:boolean"/>
+        <xsd:attribute name="trim" type="xsd:boolean" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="PreProcessor">
+        <xsd:choice>
+            <xsd:element name="SubstringPreProcessor" type="SubstringPreProcessor"/>
+            <xsd:element name="TrimPreProcessor" type="TrimPreProcessor"/>
+            <xsd:element name="StringAppenderPreProcessor" type="StringAppenderPreProcessor"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="SubstringPreProcessor">
+        <xsd:attribute name="start" type="xsd:integer" use="required"/>
+        <xsd:attribute name="end" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="TrimPreProcessor">
+        <xsd:attribute name="trimLeading" type="xsd:string"/>
+        <xsd:attribute name="trimTrailing" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="StringAppenderPreProcessor">
+        <xsd:attribute name="prefix" type="xsd:string"/>
+        <xsd:attribute name="suffix" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Validator">
+        <xsd:choice>
+            <xsd:element name="NotNullValidator" type="NotNullValidator"/>
+            <xsd:element name="CharsetValidator" type="CharsetValidator"/>
+            <xsd:element name="LengthValidator" type="LengthValidator"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="NotNullValidator">
+    </xsd:complexType>
+
+    <xsd:complexType name="CharsetValidator">
+        <xsd:attribute name="charset" type="xsd:string" use="required"/>
+        <xsd:attribute name="in" type="xsd:boolean" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="LengthValidator">
+        <xsd:attribute name="minLength" type="xsd:integer"/>
+        <xsd:attribute name="maxLength" type="xsd:integer"/>
+    </xsd:complexType>
+
+</xsd:schema>

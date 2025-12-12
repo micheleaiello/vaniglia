@@ -1,0 +1,14 @@
+<ParserConfiguration xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../schema/Parser.xsd'>
+
+    <Parser token="," recovery="0">
+        <FixedLenghtRecordType>
+            <StringFieldType trim="true"/>
+            <BooleanFieldType trim="true" ignoreCase="true" trueValue="1"/>
+            <BooleanFieldType trim="true" ignoreCase="true" trueValue="true"/>
+            <BooleanFieldType trim="true" ignoreCase="false" trueValue="true"/>
+            <BooleanFieldType trim="false" ignoreCase="true" trueValue="TRUE"/>
+            <BooleanFieldType trim="true" ignoreCase="true" trueValue="yes"/>
+        </FixedLenghtRecordType>
+    </Parser>
+
+</ParserConfiguration>
